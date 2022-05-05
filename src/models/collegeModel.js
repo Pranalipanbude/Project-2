@@ -3,14 +3,14 @@ const mongoose = require('mongoose');
 
 const collegeSchema = new mongoose.Schema({
 
-    "name":{
+    "name": {
         type: String,
         required: [true, "name is required"],
         unique: true,
         trim: true
     },
 
-    "fullName":{
+    "fullName": {
         type: String,
         required: [true, "fullName is required"],
         unique: true,
@@ -18,7 +18,7 @@ const collegeSchema = new mongoose.Schema({
 
     },
 
-    "logolink":{
+    "logoLink": {
         type: String,
         required: [true, "logo link is required"],
         trim: true
@@ -28,8 +28,8 @@ const collegeSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
-    
 
-},{timestamps: true})
 
-module.exports= mongoose.model("college" , collegeSchema)
+}, { timestamps: true })
+
+module.exports = mongoose.model("college", collegeSchema)

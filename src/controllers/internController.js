@@ -31,9 +31,13 @@ const createIntern = async function (req, res) {
 
             if (!isValid(mobile)) {
                 return res.status(400).send({ status: false, msg: "Mobile number is required" })
-        
-            
+
             }
+
+            if (! /^(\+\d{1,3}[- ]?)?\d{10}$/.test(mobile)) {
+                return res.status(400).send({ status: false, msg: "please enter a valid mobile number" })
+            }
+
             if (!isValid(collegeId)) {
                 return res.status(400).send({ status: false, msg: "collegeId is required" })
             }
@@ -53,10 +57,53 @@ const createIntern = async function (req, res) {
 }
 
 
-// const GetData = async function(req, res){
-//     let data = re
 
-// }
+const getInters = async function (req, res) {
+    try {
+        let body = req.query;
+
+        if (!isValid(body)) {
+            return res.status(400).send({
+                status: false,
+                message: "Query not found, Please provide a query",
+            });
+        }
+        let collegeName = req.query.name
+        if (!collegeName) return res.status(400).send({ status: false, msg: "Please give the college name" })
+        if (!isValid(collegeName)) {
+            return res.status(400).send({ status: false, msg: "Give the valid college name, College name is not in the list" })
+        }
+        let small = collegeName.toLowerCase()                          
+        let getCollege = await collegeModel.findOne({ name: small, isDeleted: false })
+        if (!getCollege) {
+            return res.status(400).send({ status: false, msg: "Not a valid college" })
+        }
+        let checkId = getCollege._id
+        let name1 = getCollege.name
+        let fullName1 = getCollege.fullName
+        let logoLink1 = getCollege.logoLink
+
+        const totalIntern = await internModel.find({ collegeId: checkId, isDeleted: false }).select({ _id: 1, name: 1, email: 1, mobile: 1 });
+        if (totalIntern.length != 0) {
+            let Data = {
+                name: name1,
+                fullName: fullName1,
+                logoLink: logoLink1,
+                interests: totalIntern
+            }
+            return res.status(200).send({ status: true, data: Data });
+        }
+        else {
+            res.status(400).send({ status: false, msg: "Bad Request" })
+        }
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).send({ status: false, msg: "error", err: err.message })
+    }
+
+
+}
 
 
 
@@ -65,4 +112,22 @@ const createIntern = async function (req, res) {
 
 
 
-module.exports.createIntern=createIntern
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports.createIntern = createIntern
+module.exports.getInters = getInters

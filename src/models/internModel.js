@@ -32,7 +32,9 @@ const internSchema = new mongoose.Schema({
     "mobile": {
         type: Number,
         unique: true,
-
+        validator: function (mobile) {
+            return /^(\+\d{1,3}[- ]?)?\d{10}$/.test(mobile);
+        }
 
     },
     "collegeId": {
