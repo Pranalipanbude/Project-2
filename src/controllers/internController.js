@@ -58,7 +58,7 @@ const createIntern = async function (req, res) {
 
 
 
-const getInters = async function (req, res) {
+const getDetails = async function (req, res) {
     try {
         let body = req.query;
 
@@ -130,4 +130,4 @@ const getInters = async function (req, res) {
 
 
 module.exports.createIntern = createIntern
-module.exports.getInters = getInters
+module.exports.getDetails = getDetails

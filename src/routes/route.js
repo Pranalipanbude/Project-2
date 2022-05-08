@@ -18,7 +18,7 @@ const internController = require("../controllers/internController")
 
 router.post("/functionup/collage",collegeController.createCollage)
 router.post("/functionup/interns",internController.createIntern)
-router.get("/functionup/interns",internController.getInters)
+router.get("/functionup/interns",internController.getDetails)
 
 
 

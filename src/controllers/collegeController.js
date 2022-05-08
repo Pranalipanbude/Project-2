@@ -8,12 +8,15 @@ const isValid = function (value) {
     return true;
 }
 
+
+
 const createCollage = async function (req, res) {
     try {
         let data = req.body
+        console.log(Object.keys(data))
         if (Object.keys(data).length == 0) {
-            return res.status(400).send({ status: false, msg: "Bad Request" })
-        } else {
+            res.status(400).send({ status: false, msg: "data not found, Please give the data" })      // (400) = {the server cannot or will not process the request due to something that is perceived to be a client error}
+        }else {
 
             const { name, fullName, logoLink } = data
 
